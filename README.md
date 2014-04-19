@@ -20,7 +20,7 @@ Include the link (for example www.mysettings.com/settings.json ) like this in yo
 Copyright
 ---------
 
-Copyright &copy; 2012-2014 Thomas "TAT" Andresen and other contributors
+Copyright &copy; 2014
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
