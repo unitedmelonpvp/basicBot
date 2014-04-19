@@ -473,7 +473,6 @@ var esBot = {
                 }        
             },
             intervalMessage: function(){
-                console.log('in message fct');                
                 var interval;
                 if(esBot.roomSettings.motdEnabled) interval = esBot.roomSettings.motdInterval;
                 else interval = esBot.roomSettings.messageInterval;
