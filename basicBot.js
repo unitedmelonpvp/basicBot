@@ -82,7 +82,7 @@ var retrieveFromStorage = function(){
 };
 
 var esBot = {
-        version: '1.0.2',        
+        version: '1.0.3',        
         status: false,
         name: 'basicBot',
         creator: 'EuclideanSpace',
@@ -187,10 +187,10 @@ var esBot = {
                 },
                 endRoulette: function(){
                     esBot.room.roulette.rouletteStatus = false;
-                    var ind = Math.random() * esBot.room.roulette.participants.length;
+                    var ind = Math.floor(Math.random() * esBot.room.roulette.participants.length);
                     var winner = esBot.room.roulette.participants[ind];
                     esBot.room.roulette.participants = [];
-                    var pos = (Math.random() * API.getWaitList().length) + 1;
+                    var pos = Math.floor((Math.random() * API.getWaitList().length) + 1);
                     var user = esBot.userUtilities.lookupUser(winner);
                     var name = user.username;
                     API.sendChat("/me A winner has been picked! @" + name + " to position " + pos + ".");
