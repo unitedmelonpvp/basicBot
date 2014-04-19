@@ -731,7 +731,7 @@ var esBot = {
                 }
                 else return false;
                 var userPerm = esBot.userUtilities.getPermission(chat.fromID);
-                if(chat.message !== "!join" || chat.message !== "!leave"){                            
+                if(chat.message !== "!join" && chat.message !== "!leave"){                            
                     if(userPerm === 0 && !esBot.room.usercommand) return void (0);
                     if(!esBot.room.allcommand) return void (0);
                 }                            
