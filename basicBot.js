@@ -82,7 +82,7 @@ var retrieveFromStorage = function(){
 };
 
 var esBot = {
-        version: '1.0.4',        
+        version: '1.0.5',        
         status: false,
         name: 'basicBot',
         creator: 'EuclideanSpace',
@@ -414,7 +414,7 @@ var esBot = {
                 },                
             },                
             afkCheck: function(){
-                if(!esBot.status) return void (0);
+                if(!esBot.status || !esBot.roomSettings.afkRemoval) return void (0);
                     var djlist = API.getWaitList();
                     var lastPos = Math.min(djlist.length - 2, esBot.roomSettings.afkpositionCheck);
                     if(lastPos - 1 > djlist.length) return void (0);
