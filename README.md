@@ -1,8 +1,6 @@
 basicBot
 ========
 
-<<<<<<< HEAD
-
 Usage
 -----
 
@@ -59,8 +57,9 @@ You also agree not to alter the bot's code. Any requests for changes can be requ
 - timeguard: skip songs that are too long
 - MotD, Message of the Day: an optional message that is displayed every few songs
 - links to facebook, youtube, a website... can be set using special bot settings
-=======
+
 basic plug.dj bot
+=================
 
 Will be released in a few hours.
 
