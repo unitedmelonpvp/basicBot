@@ -82,7 +82,7 @@ var retrieveFromStorage = function(){
 };
 
 var esBot = {
-        version: '1.0.0',        
+        version: '1.0.1',        
         status: false,
         name: 'basicBot',
         creator: 'EuclideanSpace',
@@ -192,7 +192,9 @@ var esBot = {
                     var winner = esBot.room.roulette.participants[ind];
                     esBot.room.roulette.participants = [];
                     var pos = (Math.random() * API.getWaitList().length) + 1;
-                    esBot.userUtilities.moveUser(winner);
+                    setTimeout(function(winner){
+                        esBot.userUtilities.moveUser(winner);
+                    }, 1*1000, winner);
 
                 },
             },
@@ -724,9 +726,11 @@ var esBot = {
                         else cmd = chat.message.substring(0,space);
                 }
                 else return false;
-                var userPerm = esBot.userUtilities.getPermission(chat.fromID);                            
-                if(userPerm === 0 && !esBot.room.usercommand) return void (0);
-                if(!esBot.room.allcommand) return void (0);                            
+                var userPerm = esBot.userUtilities.getPermission(chat.fromID);
+                if(cmd !== "'join"){                            
+                    if(userPerm === 0 && !esBot.room.usercommand) return void (0);
+                    if(!esBot.room.allcommand) return void (0);
+                }                            
                 if(chat.message === '!eta' && esBot.roomSettings.etaRestriction){
                     if(userPerm < 2){
                         var u = esBot.userUtilities.lookupUser(chat.fromID);
@@ -1498,7 +1502,7 @@ var esBot = {
                                 else{
                                     if(esBot.room.roulette.rouletteStatus){
                                         esBot.room.roulette.participants.push(chat.fromID);
-                                        API.sendChat("/me @" + chat.from + " joined the roulette! (!leave if you regret it.");
+                                        API.sendChat("/me @" + chat.from + " joined the roulette! (!leave if you regret it.)");
                                     }
                                 };                              
                         },
