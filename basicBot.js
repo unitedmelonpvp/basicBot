@@ -943,6 +943,8 @@ var esBot = {
             API.off(API.HISTORY_UPDATE,                              this.proxy.eventHistoryupdate);
         },
         startup: function(){
+            var u = API.getUser();
+            if(u.permission < 2) return API.chatLog("Only managers and up can run a bot.");
             this.connectAPI();
             retrieveFromStorage();
             if(esBot.room.roomstats.launchTime === null){
