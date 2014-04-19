@@ -45,7 +45,8 @@ By using this chatbot you agree to not use it for violating plug.dj's Terms of S
 You also agree not to alter the bot's code. Any requests for changes can be requested via email, through github or via plug.dj.
 
 
-###Bot features (all can be disabled or enabled through commands)###
+Bot features (all can be disabled or enabled through commands)
+--------------------------------------------------------------
 
 - data gets saved: upon refreshing the page the bot's data is saved up to 1 hour after refreshing
 - dclookup: when a user leaves or disconnects, he/she can get his/her spot back when reconnecting within the specified time limit
@@ -58,21 +59,6 @@ You also agree not to alter the bot's code. Any requests for changes can be requ
 - MotD, Message of the Day: an optional message that is displayed every few songs
 - links to facebook, youtube, a website... can be set using special bot settings
 
----------------------------------------------------------------
-Bot features (all can be disabled or enabled through commands):
----------------------------------------------------------------
-- data gets saved: upon refreshing the page the bot's data is saved up to 1 hour after refreshing
-- dclookup: when a user leaves or disconnects, he/she can get his/her spot back when reconnecting within the specified time limit
-- afk check: users that are afk (this is, not chatting: chats containing only a . or another symbol don't count), get automatically warned and removed after 2 warnings
-- bouncer+: when enabled bouncers have extra permissions, like moving people in the waitlist
-- mute: mute or unmute people
-- cycleguard: disable DJ cycle waitlist if it's enabled too long
-- lockguard: unlock the waitlist if it's locked for too long
-- timeguard: skip songs that are too long
-- MotD, Message of the Day: an optional message that is displayed every few songs
-
-
----------
 Commands:
 ---------
 
