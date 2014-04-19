@@ -82,7 +82,7 @@ var retrieveFromStorage = function(){
 };
 
 var esBot = {
-        version: '1.0.3',        
+        version: '1.0.4',        
         status: false,
         name: 'basicBot',
         creator: 'EuclideanSpace',
@@ -190,13 +190,14 @@ var esBot = {
                     var ind = Math.floor(Math.random() * esBot.room.roulette.participants.length);
                     var winner = esBot.room.roulette.participants[ind];
                     esBot.room.roulette.participants = [];
-                    var pos = Math.floor((Math.random() * API.getWaitList().length) + 1);
+                    var wl = API.getWaitList();
+                    var pos = Math.floor((Math.random() * wl.length) + 1);
                     var user = esBot.userUtilities.lookupUser(winner);
                     var name = user.username;
                     API.sendChat("/me A winner has been picked! @" + name + " to position " + pos + ".");
                     setTimeout(function(winner){
-                        esBot.userUtilities.moveUser(winner);
-                    }, 1*1000, winner);
+                        esBot.userUtilities.moveUser(winner, pos, false);
+                    }, 1*1000, winner, pos);
 
                 },
             },
@@ -729,7 +730,7 @@ var esBot = {
                 }
                 else return false;
                 var userPerm = esBot.userUtilities.getPermission(chat.fromID);
-                if(cmd !== "'!join"){                            
+                if(chat.message !== "!join"){                            
                     if(userPerm === 0 && !esBot.room.usercommand) return void (0);
                     if(!esBot.room.allcommand) return void (0);
                 }                            
