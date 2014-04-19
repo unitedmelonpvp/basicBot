@@ -191,7 +191,9 @@ var esBot = {
                     var winner = esBot.room.roulette.participants[ind];
                     esBot.room.roulette.participants = [];
                     var pos = (Math.random() * API.getWaitList().length) + 1;
-                    API.sendChat("/me A winner has been picked!");
+                    var user = esBot.userUtilities.lookupUser(id);
+                    var name = user.username;
+                    API.sendChat("/me A winner has been picked! @" + name + " to position " + pos + ".");
                     setTimeout(function(winner){
                         esBot.userUtilities.moveUser(winner);
                     }, 1*1000, winner);
