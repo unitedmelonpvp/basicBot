@@ -6,7 +6,7 @@ Usage
 
 Bookmark the following code. To run the bot, run the bookmark.
 
-javascript:$.getScript('dummylink');
+javascript:$.getScript('https://raw.githubusercontent.com/Yemasthui/basicBot/master/basicBot.js');
 
 ###Special settings###
 

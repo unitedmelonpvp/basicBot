@@ -87,8 +87,8 @@ var esBot = {
         name: 'basicBot',
         creator: 'EuclideanSpace',
         loggedInID: null,
-        scriptLink: 'https://dl.dropboxusercontent.com/u/49540148/esBot/esBotBeta.js',
-        cmdLink: 'https://github.com/Yemasthui/basicBot/blob/master/README.md',
+        scriptLink: 'https://raw.githubusercontent.com/Yemasthui/basicBot/master/basicBot.js',
+        cmdLink: 'http://git.io/245Ppg',
         roomSettings: {
             maximumAfk: 120,
             afkRemoval: true,                
