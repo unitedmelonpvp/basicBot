@@ -1603,7 +1603,7 @@ var esBot = {
                                 if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                 else{
                                     var ind = esBot.room.roulette.participants.indexOf(chat.fromID);
-                                    if(ind > 0){
+                                    if(ind > -1){
                                         esBot.room.roulette.participants.splice(ind, 1);
                                         API.sendChat("/me @" + chat.from + " left the roulette!");
                                     }
