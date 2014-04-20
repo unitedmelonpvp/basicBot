@@ -17,11 +17,21 @@ Include the link (for example www.mysettings.com/settings.json ) like this in yo
 @basicBot=www.mysettings.com/settings.json
 
 
+Credits
+-------
+
+I would like to thank the following people:
+
+- Fungus: His Tastybot has been a source of inspiration for most of the features, and his help with coding problems has been invaluable to make this bot.
+- TAT, Origin and other Litebot contributors: Their Litebot has inspired features like Roulette.
+- Henchman: Never knew this undertaking would give me a friend too.
+
+
 Copyright
 ---------
 
 Copyright &copy; 2014
-
+ 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or

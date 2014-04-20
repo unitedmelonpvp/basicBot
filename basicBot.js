@@ -48,7 +48,6 @@ var retrieveFromStorage = function(){
             API.chatLog('Retrieving previously stored data.');
             esBot.roomSettings = settings;
             esBot.room.users = room.users;
-            esBot.room.casino = room.casino;
             esBot.room.afkList = room.afkList;
             esBot.room.historyList = room.historyList;
             esBot.room.mutedUsers = room.mutedUsers;
@@ -102,10 +101,6 @@ var esBot = {
             timeGuard: true,
             maximumSongLength: 10,                
             autodisable: true,                
-            casino: true,
-            casinoSpot: 2,
-            casinoTimer: 60,
-            casinoThreshold: 10,                
             commandCooldown: 30,
             usercommandsEnabled: true,                
             lockskipPosition: 3,
@@ -1775,7 +1770,7 @@ var esBot = {
                                     var pos = msg.substring(cmd.length + 1);
                                     if(!isNaN(tr)){
                                         esBot.roomSettings.lockskipPosition = pos;
-                                        return API.sendChat('/me [@' + chat.from + '] Lockskip will now move the dj to position ' + esBot.roomSettings.casinoThreshold + '.');
+                                        return API.sendChat('/me [@' + chat.from + '] Lockskip will now move the dj to position ' + esBot.roomSettings.lockskipPosition + '.');
                                     }
                                     else return API.sendChat('/me [@' + chat.from + '] No valid position specified.');
                                 };                              
