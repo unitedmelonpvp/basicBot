@@ -527,11 +527,11 @@ var esBot = {
             }
             if(known){
                 esBot.room.users[index].inRoom = true;
-                var welcome = "Welcome ";
+                var welcome = "Welcome back, ";
             }
             else{
                 esBot.room.users.push(new esBot.User(user.id, user.username));
-                var welcome = "Welcome back, ";
+                var welcome = "Welcome ";
             }    
             for(var j = 0; j < esBot.room.users.length;j++){
                 if(esBot.userUtilities.getUser(esBot.room.users[j]).id === user.id){
