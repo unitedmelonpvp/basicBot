@@ -426,6 +426,7 @@ var esBot = {
             afkCheck: function(){
                 if(!esBot.status || !esBot.roomSettings.afkRemoval) return void (0);
                     var rank = esBot.roomUtilities.rankToNumber(esBot.roomSettings.afkRankCheck);
+                    console.log('max afk rank: ' + rank);
                     var djlist = API.getWaitList();
                     var lastPos = Math.min(djlist.length - 2, esBot.roomSettings.afkpositionCheck);
                     if(lastPos - 1 > djlist.length) return void (0);
@@ -437,6 +438,7 @@ var esBot = {
                                 var plugUser = esBot.userUtilities.getUser(user);
                                 if(rank !== null && plugUser.permission <= rank){
                                     var name = plugUser.username;
+                                    console.log(name + ' is getting checked');
                                     var lastActive = esBot.userUtilities.getLastActivity(user);
                                     var inactivity = Date.now() - lastActive;
                                     var time = esBot.roomUtilities.msToStr(inactivity);
