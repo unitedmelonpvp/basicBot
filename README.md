@@ -10,6 +10,8 @@ javascript:$.getScript('https://raw.githubusercontent.com/Yemasthui/basicBot/mas
 
 ###Special settings###
 
+For a more detailed explanation: see settingsGuide.md
+
 Standard settings can be used. Both the default settings and an example of a custom settings file (uses the .json extension) are included.
 To use a settings file, make a public url for it. An easy way to do this is to upload it to dropbox and get a public link to it.
 Include the link (for example www.mysettings.com/settings.json ) like this in your room's description, followed by a space or an enter:

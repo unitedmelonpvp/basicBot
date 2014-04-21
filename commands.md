@@ -76,6 +76,7 @@ Resident DJ
 User
 ----
 
+- !autowoot ---- ---- links to PlugCubed, the advised script/plugin to use for autowooting
 - !ba ---- ---- explains the Brand Ambassador rank
 - !commands ---- ---- gives a link to the commands
 - !cookie ---- (@user) ---- give a cookie to user

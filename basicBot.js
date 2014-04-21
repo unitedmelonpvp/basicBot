@@ -81,13 +81,13 @@ var retrieveFromStorage = function(){
 };
 
 var esBot = {
-        version: '1.0.6',        
+        version: "1.0.7",        
         status: false,
-        name: 'basicBot',
-        creator: 'EuclideanSpace',
+        name: "basicBot",
+        creator: "EuclideanSpace",
         loggedInID: null,
-        scriptLink: 'https://raw.githubusercontent.com/Yemasthui/basicBot/master/basicBot.js',
-        cmdLink: 'http://git.io/245Ppg',
+        scriptLink: "https://raw.githubusercontent.com/Yemasthui/basicBot/master/basicBot.js",
+        cmdLink: "http://git.io/245Ppg",
         roomSettings: {
             maximumAfk: 120,
             afkRemoval: true,                
@@ -104,21 +104,19 @@ var esBot = {
             commandCooldown: 30,
             usercommandsEnabled: true,                
             lockskipPosition: 3,
-            lockskipReasons: [ ['theme', 'This song does not fit the room theme. '], 
-                    ['op', 'This song is on the OP list. '], 
-                    ['history', 'This song is in the history. '], 
-                    ['mix', 'You played a mix, which is against the rules. '], 
-                    ['sound', 'The song you played had bad sound quality or no sound. '],
-                    ['nsfw', 'The song you contained was NSFW (image or sound). '], 
-                    ['unavailable', 'The song you played was not available for some users. '] 
+            lockskipReasons: [ ["theme", "This song does not fit the room theme. "], 
+                    ["op", "This song is on the OP list. "], 
+                    ["history", "This song is in the history. "], 
+                    ["mix", "You played a mix, which is against the rules. "], 
+                    ["sound", "The song you played had bad sound quality or no sound. "],
+                    ["nsfw", "The song you contained was NSFW (image or sound). "], 
+                    ["unavailable", "The song you played was not available for some users. "] 
                 ],
             afkpositionCheck: 15,
             afkRankCheck: "ambassador",                
-            queueChecking: true,                
             motdEnabled: false,
             motdInterval: 5,
-            motd: 'Temporary Message of the Day',                
-            messagesEnabled: true,
+            motd: "Temporary Message of the Day",                
             filterChat: true,
             etaRestriction: false,
             welcome: true,
@@ -529,9 +527,12 @@ var esBot = {
             }
             if(known){
                 esBot.room.users[index].inRoom = true;
+                var welcome = "Welcome ";
             }
-            else esBot.room.users.push(new esBot.User(user.id, user.username));
-
+            else{
+                esBot.room.users.push(new esBot.User(user.id, user.username));
+                var welcome = "Welcome back, ";
+            }    
             for(var j = 0; j < esBot.room.users.length;j++){
                 if(esBot.userUtilities.getUser(esBot.room.users[j]).id === user.id){
                     esBot.userUtilities.setLastActivity(esBot.room.users[j]);
@@ -540,7 +541,7 @@ var esBot = {
             }
             if(esBot.roomSettings.welcome){
                 setTimeout(function(){
-                    API.sendChat('/me Welcome @' + user.username + '.');
+                    API.sendChat("/me " + welcome + "@" + user.username + ".");
                 }, 1*1000);
             }               
         },        
@@ -768,6 +769,7 @@ var esBot = {
                     case '!afkreset':           esBot.commands.afkresetCommand.functionality(chat, '!afkreset');                    executed = true; break;
                     case '!afktime':            esBot.commands.afktimeCommand.functionality(chat, '!afktime');                      executed = true; break;
                     case '!autoskip':           esBot.commands.autoskipCommand.functionality(chat, '!autoskip');                    executed = true; break;
+                    case '!autowoot':           esBot.commands.autowootCommand.functionality(chat, '!autowoot');                    executed = true; break;
                     case '!ba':                 esBot.commands.baCommand.functionality(chat, '!ba');                                executed = true; break;
                     case '!ban':                esBot.commands.banCommand.functionality(chat, '!ban');                              executed = true; break;
                     case '!bouncer+':           esBot.commands.bouncerPlusCommand.functionality(chat, '!bouncer+');                 executed = true; break;
@@ -892,7 +894,7 @@ var esBot = {
                 'bcomeafanofme','bcomemyfan','fanstofan','bemefan','trocarfan','fanforme',
                 'fansforme','allforfan','fansintofans','fanintofan','f(a)nme','prestomyfan',
                 'presstomyfan','fanpleace','fanspleace','givemyafan','addfan','addsmetofan',
-                'f4f','canihasfan','canihavefan','givetomeafan','givemyfan','phanme',
+                'f4f','canihasfan','canihavefan','givetomeafan','givemyfan','phanme','but i need please fan',
                 'fanforafan','fanvsfan','fanturniturn','fanturninturn','sejammeufa',
                 'sejammeusfa','befanofme','faninfan','addtofan','fanthisaccount',
                 'fanmyaccount','fanback','addmeforfan','fans4fan','fans4fan','fanme','bemyfanpls','befanpls','f4f','fanyfan'
@@ -1182,6 +1184,18 @@ var esBot = {
                                         esBot.roomSettings.autoskip = !esBot.roomSettings.autoskip;
                                         return API.sendChat('/me [@' + chat.from + '] Autoskip enabled.');
                                     }
+                                };                              
+                        },
+                },
+
+                autowootCommand: {
+                        rank: 'user',
+                        type: 'exact',
+                        functionality: function(chat, cmd){
+                                if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                                if( !esBot.commands.executable(this.rank, chat) ) return void (0);
+                                else{
+                                    API.sendChat("/me We recommend PlugCubed for autowooting: http://plugcubed.net/")
                                 };                              
                         },
                 },
