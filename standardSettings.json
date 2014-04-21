@@ -22,7 +22,8 @@
             ["nsfw", "The song you contained was NSFW (image or sound). "], 
             ["unavailable", "The song you played was not available for some users. "] 
         ],
-    "afkpositionCheck": 15,                
+    "afkpositionCheck": 15,
+    "afkRankCheck": "ambassador",                
     "queueChecking": true,                
     "motdEnabled": false,
     "motdInterval": 5,

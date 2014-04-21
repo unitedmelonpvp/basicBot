@@ -1,4 +1,5 @@
 {
+    "afkRankCheck": "user",
     "filterChat": false,
     "etaRestriction": false,
     "welcome": true,

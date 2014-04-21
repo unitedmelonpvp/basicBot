@@ -112,7 +112,8 @@ var esBot = {
                     ['nsfw', 'The song you contained was NSFW (image or sound). '], 
                     ['unavailable', 'The song you played was not available for some users. '] 
                 ],
-            afkpositionCheck: 15,                
+            afkpositionCheck: 15,
+            afkRankCheck: "ambassador",                
             queueChecking: true,                
             motdEnabled: false,
             motdInterval: 5,
@@ -342,7 +343,21 @@ var esBot = {
             },              
         },
         
-        roomUtilities: {        
+        roomUtilities: {
+            rankToNumber: function(rankString){
+                var rankInt = null;
+                switch (rankString){
+                    case "admin":           rankInt = 10;   break;
+                    case "ambassador":      rankInt = 8;    break;
+                    case "host":            rankInt = 5;    break;
+                    case "cohost":          rankInt = 4;    break;
+                    case "manager":         rankInt = 3;    break;
+                    case "bouncer":         rankInt = 2;    break;
+                    case "residentdj":      rankInt = 1;    break;
+                    case "user":            rankInt = 0;    break;
+                }
+                return rankInt;
+            },        
             msToStr: function(msTime){
                 var ms, msg, timeAway;
                 msg = '';
@@ -410,6 +425,7 @@ var esBot = {
             },                
             afkCheck: function(){
                 if(!esBot.status || !esBot.roomSettings.afkRemoval) return void (0);
+                    var rank = esBot.roomUtilities.rankToNumber(esBot.roomSettings.afkRankCheck);
                     var djlist = API.getWaitList();
                     var lastPos = Math.min(djlist.length - 2, esBot.roomSettings.afkpositionCheck);
                     if(lastPos - 1 > djlist.length) return void (0);
@@ -418,35 +434,39 @@ var esBot = {
                             var id = djlist[i].id;
                             var user = esBot.userUtilities.lookupUser(id);
                             if(typeof user !== 'boolean'){
-                                var name = esBot.userUtilities.getUser(user).username;
-                                var lastActive = esBot.userUtilities.getLastActivity(user);
-                                var inactivity = Date.now() - lastActive;
-                                var time = esBot.roomUtilities.msToStr(inactivity);
-                                var warncount = user.afkWarningCount;
-                                if (inactivity > esBot.roomSettings.maximumAfk * 60 * 1000 ){
-                                    if(warncount === 0){
-                                        API.sendChat('/me @' + name + ', you have been afk for ' + time + ', please respond within 2 minutes or you will be removed.');
-                                        user.afkWarningCount = 3;
-                                        user.afkCountdown = setTimeout(function(userToChange){
-                                            userToChange.afkWarningCount = 1; 
-                                        }, 90 * 1000, user);
-                                    }
-                                    else if(warncount === 1){
-                                        API.sendChat("/me @" + name + ", you will be removed soon if you don't respond. [AFK]");
-                                        user.afkWarningCount = 3;
-                                        user.afkCountdown = setTimeout(function(userToChange){
-                                            userToChange.afkWarningCount = 2;
-                                        }, 30 * 1000, user);
-                                    }
-                                    else if(warncount === 2){
-                                        var pos = API.getWaitListPosition(id);
-                                        if(pos !== -1){
-                                        esBot.room.afkList.push([id, Date.now(), pos]);
-                                        API.moderateRemoveDJ(id);
-                                        API.sendChat('/me @' + name + ', you have been removed for being afk for ' + time + '. You were at position ' + pos + '. Chat at least once every ' + esBot.roomSettings.maximumAfk + ' minutes if you want to play a song.');
+                                var plugUser = esBot.userUtilities.getUser(user);
+                                if(rank !== null && plugUser.permission <= rank){
+                                    var name = plugUser.username;
+                                    var lastActive = esBot.userUtilities.getLastActivity(user);
+                                    var inactivity = Date.now() - lastActive;
+                                    var time = esBot.roomUtilities.msToStr(inactivity);
+                                    var warncount = user.afkWarningCount;
+                                    if (inactivity > esBot.roomSettings.maximumAfk * 60 * 1000 ){
+                                        if(warncount === 0){
+                                            API.sendChat('/me @' + name + ', you have been afk for ' + time + ', please respond within 2 minutes or you will be removed.');
+                                            user.afkWarningCount = 3;
+                                            user.afkCountdown = setTimeout(function(userToChange){
+                                                userToChange.afkWarningCount = 1; 
+                                            }, 90 * 1000, user);
                                         }
-                                        user.afkWarningCount = 0;
-                                    };
+                                        else if(warncount === 1){
+                                            API.sendChat("/me @" + name + ", you will be removed soon if you don't respond. [AFK]");
+                                            user.afkWarningCount = 3;
+                                            user.afkCountdown = setTimeout(function(userToChange){
+                                                userToChange.afkWarningCount = 2;
+                                            }, 30 * 1000, user);
+                                        }
+                                        else if(warncount === 2){
+                                            var pos = API.getWaitListPosition(id);
+                                            if(pos !== -1){
+                                                pos++;
+                                                esBot.room.afkList.push([id, Date.now(), pos]);
+                                                API.moderateRemoveDJ(id);
+                                                API.sendChat('/me @' + name + ', you have been removed for being afk for ' + time + '. You were at position ' + pos + '. Chat at least once every ' + esBot.roomSettings.maximumAfk + ' minutes if you want to play a song.');
+                                            }
+                                            user.afkWarningCount = 0;
+                                        };
+                                    }
                                 }
                             }
                         }
@@ -1768,7 +1788,7 @@ var esBot = {
                                 else{
                                     var msg = chat.message;
                                     var pos = msg.substring(cmd.length + 1);
-                                    if(!isNaN(tr)){
+                                    if(!isNaN(pos)){
                                         esBot.roomSettings.lockskipPosition = pos;
                                         return API.sendChat('/me [@' + chat.from + '] Lockskip will now move the dj to position ' + esBot.roomSettings.lockskipPosition + '.');
                                     }
