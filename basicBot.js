@@ -1951,7 +1951,12 @@ var esBot = {
                                                         wasMuted = true;
                                                     }
                                                 }
-                                                if(indexMuted > -1) esBot.room.mutedUsers.splice(indexMuted);
+                                                if(indexMuted > -1){
+                                                    esBot.room.mutedUsers.splice(indexMuted);
+                                                    var u = esBot.userUtilities.lookupUser(id);
+                                                    var name = u.username;
+                                                    API.sendChat('/me [@' + chat.from + '] Unmuted @' + name + '.');
+                                                }
                                             }, time * 60 * 1000, user.id);
                                         } 
                                     }
