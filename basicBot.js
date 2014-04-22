@@ -81,7 +81,7 @@ var retrieveFromStorage = function(){
 };
 
 var esBot = {
-        version: "1.0.7",        
+        version: "1.0.8",        
         status: false,
         name: "basicBot",
         creator: "EuclideanSpace",
@@ -525,9 +525,14 @@ var esBot = {
                         index = i;
                 }
             }
+            var greet = true;
             if(known){
                 esBot.room.users[index].inRoom = true;
-                var welcome = "Welcome back, ";
+                var u = esBot.userUtilities.lookupUser(user.id);
+                var jt = u.jointime;
+                var t = Date.now() - jt;
+                if(t < 10*1000) greet = false;
+                else var welcome = "Welcome back, ";
             }
             else{
                 esBot.room.users.push(new esBot.User(user.id, user.username));
@@ -536,10 +541,11 @@ var esBot = {
             for(var j = 0; j < esBot.room.users.length;j++){
                 if(esBot.userUtilities.getUser(esBot.room.users[j]).id === user.id){
                     esBot.userUtilities.setLastActivity(esBot.room.users[j]);
+                    esBot.room.users[j].jointime = Date.now();
                 }
             
             }
-            if(esBot.roomSettings.welcome){
+            if(esBot.roomSettings.welcome && greet){
                 setTimeout(function(){
                     API.sendChat("/me " + welcome + "@" + user.username + ".");
                 }, 1*1000);
@@ -1912,15 +1918,42 @@ var esBot = {
                                 else{
                                     var msg = chat.message;
                                     if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] No user specified.');
+                                    var lastSpace = msg.lastIndexOf(' ');
+                                    var time = null;
+                                    var name;
+                                    if(lastSpace === msg.indexOf(' ')){
+                                        name = msg.substring(cmd.length + 2);
+                                        }    
+                                    else{
+                                        time = msg.substring(lastSpace + 1);
+                                        if(isNaN(time)){
+                                            return API.sendChat('/me [@' + chat.from + '] Invalid time specified.');
+                                        }
+                                        name = msg.substring(cmd.length + 2, lastSpace);
+                                    }
                                     var from = chat.from;
-                                    var name = msg.substr(cmd.length + 2);
                                     var user = esBot.userUtilities.lookupUserName(name);
                                     if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] Invalid user specified.');
                                     var permFrom = esBot.userUtilities.getPermission(chat.fromID);
                                     var permUser = esBot.userUtilities.getPermission(user.id);
                                     if(permFrom > permUser){
                                         esBot.room.mutedUsers.push(user.id);
-                                        API.sendChat('/me [@' + chat.from + '] Muted @' + name + '.');
+                                        if(time === null) API.sendChat('/me [@' + chat.from + '] Muted @' + name + '.');
+                                        else{
+                                            API.sendChat('/me [@' + chat.from + '] Muted @' + name + ' for ' + time + ' minutes.');
+                                            setTimeout(function(id){
+                                                var muted = esBot.room.mutedUsers;
+                                                var wasMuted = false;
+                                                var indexMuted = -1;
+                                                for(var i = 0; i < muted.length; i++){
+                                                    if(muted[i] === id){
+                                                        indexMuted = i;
+                                                        wasMuted = true;
+                                                    }
+                                                }
+                                                if(indexMuted > -1) esBot.room.mutedUsers.splice(indexMuted);
+                                            }, time * 60 * 1000, user.id);
+                                        } 
                                     }
                                     else API.sendChat("/me [@" + chat.from + "] You can't mute persons with an equal or higher rank than you.");
                                 };                              

@@ -4,6 +4,7 @@ basicBot
 Usage
 -----
 
+Chrome is advised to run the bot.
 Bookmark the following code. To run the bot, run the bookmark.
 
 javascript:$.getScript('https://raw.githubusercontent.com/Yemasthui/basicBot/master/basicBot.js');

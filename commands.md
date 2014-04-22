@@ -53,7 +53,7 @@ Bouncer
 - !lockskip ---- (reason) ---- skip the song and move the dj back up (the position can be set with !lockskippos)
 - !lockskippos ---- X ---- set the position to which lockskip moves the dj
 - !motd ---- (X)/(message) ---- when no argument is specified, returns the Message of the Day, when X is specified, the MotD is given every X songs, when "message" is given, it sets the MotD to message
-- !mute ---- @user ---- mute user
+- !mute ---- @user (X) ---- mute user, for X minutes if X is specified, otherwise for an undefined period
 - !reload ---- ---- reload the bot
 - !restricteta ---- ---- toggles the restriction on eta: grey users can use it once an hour
 - !sessionstats ---- ---- display stats for the current session
