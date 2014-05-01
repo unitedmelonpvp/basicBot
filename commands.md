@@ -23,6 +23,7 @@ Bouncer+
 --------
 
 - !add ---- @user ---- add user to the waitlist
+- !afkremoval ---- ---- toggles the afk check
 - !autoskip ---- ---- skips songs automatically when they're done (use when the circles-bug happens)
 - !bouncer+ ---- ---- disable bouncer+
 - !lock ---- ---- lock the waitlist
@@ -32,12 +33,12 @@ Bouncer+
 - !remove ---- @user ---- remove user from the waitlist
 - !roulette ---- ---- start a roulette
 - !unlock ---- ---- unlock the waitlist
+- !welcome ---- ---- toggle the welcome message on user join 
 
 Bouncer
 -------
 
 - !active ---- (X) ---- shows how many users chatted in the past X minutes. If no X specified, 60 is set as default
-- !afkremoval ---- ---- toggles the afk check
 - !afkreset ---- @user ---- resets the afk time of user
 - !afktime ---- @user ---- shows how long user has been afk
 - !ban ---- @user ---- bans user for 1 day
@@ -64,7 +65,6 @@ Bouncer
 - !unban ---- @user ---- unban user
 - !unmute ---- ---- unmute user
 - !voteratio ---- @user ---- display the vote statistic for a user
-- !welcome ---- ---- toggle the welcome message on user join 
 
 Resident DJ
 -----------

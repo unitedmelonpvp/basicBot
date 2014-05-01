@@ -81,7 +81,7 @@ var retrieveFromStorage = function(){
 };
 
 var esBot = {
-        version: "1.0.8",        
+        version: "1.0.9",        
         status: false,
         name: "basicBot",
         creator: "EuclideanSpace",
@@ -898,7 +898,7 @@ var esBot = {
                 'plzzfan','plssfan','procurofan','comebackafan','fanyfan','givemefan','fan=fan',
                 'fan=fan','fan+fan','fan+fan','fanorfan','beacomeafanofme','beacomemyfan',
                 'bcomeafanofme','bcomemyfan','fanstofan','bemefan','trocarfan','fanforme',
-                'fansforme','allforfan','fansintofans','fanintofan','f(a)nme','prestomyfan',
+                'fansforme','allforfan','fnme','fnforfn','fansintofans','fanintofan','f(a)nme','prestomyfan',
                 'presstomyfan','fanpleace','fanspleace','givemyafan','addfan','addsmetofan',
                 'f4f','canihasfan','canihavefan','givetomeafan','givemyfan','phanme','but i need please fan',
                 'fanforafan','fanvsfan','fanturniturn','fanturninturn','sejammeufa',
@@ -966,7 +966,8 @@ var esBot = {
         },
         startup: function(){
             var u = API.getUser();
-            if(u.permission < 2) return API.chatLog("Only managers and up can run a bot.");
+            if(u.permission < 2) return API.chatLog("Only bouncers and up can run a bot.");
+            if(U.permission === 2) return API.chatLog("The bot can't move people when it's run as a bouncer.");
             this.connectAPI();
             retrieveFromStorage();
             if(esBot.room.roomstats.launchTime === null){
@@ -1116,7 +1117,7 @@ var esBot = {
                 },
 
                 afkremovalCommand: {
-                        rank: 'bouncer',
+                        rank: 'mod',
                         type: 'exact',
                         functionality: function(chat, cmd){
                                 if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
@@ -2384,7 +2385,7 @@ var esBot = {
                 },
 
                 welcomeCommand: {
-                        rank: 'bouncer',
+                        rank: 'mod',
                         type: 'exact',
                         functionality: function(chat, cmd){
                                 if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
