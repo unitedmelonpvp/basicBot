@@ -582,7 +582,7 @@ var esBot = {
         eventDjadvance: function(obj){                
             var lastplay = obj.lastPlay;
             if(typeof lastplay === 'undefined') return void (0);
-            if(esBot.roomSettings.songstats) API.sendChat("/me " + lastplay.media.author + " - " + lastplay.media.title + ": " + lastplay.score.positive + "W/" + lastplay.score.curates + "G/" + lastplay.score.negative + "M.")
+            if(esBot.roomSettings.songstats) API.sendChat("/me " + lastplay.media._previousAttributes.author + " - " + lastplay.media._previousAttributes.title + ": " + lastplay.score.positive + "W/" + lastplay.score.curates + "G/" + lastplay.score.negative + "M.")
             esBot.room.roomstats.totalWoots += lastplay.score.positive;
             esBot.room.roomstats.totalMehs += lastplay.score.negative;
             esBot.room.roomstats.totalCurates += lastplay.score.curates;
