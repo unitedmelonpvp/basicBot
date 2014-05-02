@@ -46,7 +46,10 @@ var retrieveFromStorage = function(){
         var elapsed = Date.now() - JSON.parse(info).time;
         if((elapsed < 1*60*60*1000)){
             API.chatLog('Retrieving previously stored data.');
-            esBot.roomSettings = settings;
+            for(var prop in settings){
+                esBot.roomSettings[prop] = settings[prop];
+            }
+            //esBot.roomSettings = settings;
             esBot.room.users = room.users;
             esBot.room.afkList = room.afkList;
             esBot.room.historyList = room.historyList;
@@ -81,7 +84,7 @@ var retrieveFromStorage = function(){
 };
 
 var esBot = {
-        version: "1.1.0",        
+        version: "1.1.1",        
         status: false,
         name: "basicBot",
         creator: "EuclideanSpace",
