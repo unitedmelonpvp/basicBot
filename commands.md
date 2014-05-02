@@ -43,7 +43,7 @@ Bouncer
 - !afktime ---- @user ---- shows how long user has been afk
 - !ban ---- @user ---- bans user for 1 day
 - !cycleguard ---- ---- toggles the cycleguard
-- !dclookup ---- (@user) ---- do dclookup for user
+- !dclookup / !dc ---- (@user) ---- do dclookup for user
 - !english ---- @user ---- ask user to speak english (asked in the language they set plug to)
 - !eta ---- (@user) ---- shows when user will reach the booth
 - !filter ---- ---- toggles the chat filter
@@ -80,7 +80,7 @@ User
 - !ba ---- ---- explains the Brand Ambassador rank
 - !commands ---- ---- gives a link to the commands
 - !cookie ---- (@user) ---- give a cookie to user
-- !dclookup ---- ---- use dclookup on yourself
+- !dclookup / !dc ---- ---- use dclookup on yourself
 - !emoji ---- ---- a link to a list with emoji's
 - !eta ---- ---- shows how long before you reach the booth
 - !fb ---- ---- links to the room's Facebook page (if set in the settings)

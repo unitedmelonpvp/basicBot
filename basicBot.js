@@ -81,7 +81,7 @@ var retrieveFromStorage = function(){
 };
 
 var esBot = {
-        version: "1.0.9",        
+        version: "1.1.0",        
         status: false,
         name: "basicBot",
         creator: "EuclideanSpace",
@@ -127,7 +127,8 @@ var esBot = {
             youtubeLink: null,
             website: null,
             intervalMessages: [],
-            messageInterval: 5,                      
+            messageInterval: 5,
+            songstats: true,                      
         },        
         room: {        
             users: [],                
@@ -581,6 +582,7 @@ var esBot = {
         eventDjadvance: function(obj){                
             var lastplay = obj.lastPlay;
             if(typeof lastplay === 'undefined') return void (0);
+            if(esBot.roomSettings.songstats) API.sendChat("/me " + lastplay.media.author + " - " + lastplay.media.title + ": " + lastplay.score.positive + "W/" + lastplay.score.curates + "G/" + lastplay.score.negative + "M.")
             esBot.room.roomstats.totalWoots += lastplay.score.positive;
             esBot.room.roomstats.totalMehs += lastplay.score.negative;
             esBot.room.roomstats.totalCurates += lastplay.score.curates;
@@ -786,6 +788,7 @@ var esBot = {
                     case '!cycleguard':         esBot.commands.cycleguardCommand.functionality(chat, '!cycleguard');                executed = true; break;
                     case '!cycletimer':         esBot.commands.cycletimerCommand.functionality(chat, '!cycletimer');                executed = true; break;
                     case '!dclookup':           esBot.commands.dclookupCommand.functionality(chat, '!dclookup');                    executed = true; break;
+                    case '!dc':                 esBot.commands.dclookupCommand.functionality(chat, '!dc');                          executed = true; break;
                     case '!emoji':              esBot.commands.emojiCommand.functionality(chat, '!emoji');                          executed = true; break;
                     case '!english':            esBot.commands.englishCommand.functionality(chat, '!english');                      executed = true; break;
                     case '!eta':                esBot.commands.etaCommand.functionality(chat, '!eta');                              executed = true; break;
