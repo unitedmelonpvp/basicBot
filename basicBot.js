@@ -84,7 +84,7 @@ var retrieveFromStorage = function(){
 };
 
 var esBot = {
-        version: "1.1.1",        
+        version: "1.1.2",        
         status: false,
         name: "basicBot",
         creator: "EuclideanSpace",
@@ -463,6 +463,11 @@ var esBot = {
                                             if(pos !== -1){
                                                 pos++;
                                                 esBot.room.afkList.push([id, Date.now(), pos]);
+                                                user.lastDC = {
+                                                    time: null,
+                                                    position: null,
+                                                    songCount: 0,
+                                                };
                                                 API.moderateRemoveDJ(id);
                                                 API.sendChat('/me @' + name + ', you have been removed for being afk for ' + time + '. You were at position ' + pos + '. Chat at least once every ' + esBot.roomSettings.maximumAfk + ' minutes if you want to play a song.');
                                             }
@@ -2042,6 +2047,11 @@ var esBot = {
                                         var name = msg.substr(cmd.length + 2);
                                         var user = esBot.userUtilities.lookupUserName(name);
                                         if (typeof user !== 'boolean') {
+                                            user.lastDC = {
+                                                time: null,
+                                                position: null,
+                                                songCount: 0,
+                                            };
                                             API.moderateRemoveDJ(user.id);                                          
                                         } else API.sendChat("/me [@" + chat.from + "] Specified user @" + name + " is not in the waitlist.");
                                       } else API.sendChat("/me [@" + chat.from + "] No user specified.");
@@ -2253,22 +2263,31 @@ var esBot = {
                                 if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                 if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                 else{
-                                    var msg = chat.message;
-                                    if(msg.length === cmd.length) return API.sendChat()
-                                    var name = msg.substring(chat.length + 2);
-                                    var bannedUsers = API.getBannedUsers();
-                                    var found = false;
-                                    for(var i = 0; i < bannedUsers.length; i++){
-                                        var user = bannedUsers[i];
-                                        if(user.username === name){
-                                            id = user.id;
-                                            found = true;
-                                        }
-                                      }
-                                      if(!found) return API.sendChat('/me [@' + chat.from + '] The user was not banned.');
-                                      
-                                    API.moderateUnbanUser(user.id);
-                                
+                                    $(".icon-population").click();
+                                    $(".icon-ban").click();
+                                    setTimeout(function(chat){
+                                        var msg = chat.message;
+                                        if(msg.length === cmd.length) return API.sendChat()
+                                        var name = msg.substring(cmd.length + 2);
+                                        var bannedUsers = API.getBannedUsers();
+                                        var found = false;
+                                        for(var i = 0; i < bannedUsers.length; i++){
+                                            var user = bannedUsers[i];
+                                            if(user.username === name){
+                                                id = user.id;
+                                                found = true;
+                                            }
+                                          }
+                                        if(!found){
+                                            $(".icon-chat").click();
+                                            return API.sendChat('/me [@' + chat.from + '] The user was not banned.');  
+                                        }                                
+                                        API.moderateUnbanUser(user.id);
+                                        console.log("Unbanned " + name);
+                                        setTimeout(function(){
+                                            $(".icon-chat").click();
+                                        },1000);
+                                    },1000,chat);
                                 };                              
                         },
                 },
