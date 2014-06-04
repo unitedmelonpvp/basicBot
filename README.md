@@ -9,6 +9,8 @@ Bookmark the following code. To run the bot, run the bookmark.
 
 javascript:$.getScript('https://raw.githubusercontent.com/Yemasthui/basicBot/master/basicBot.js');
 
+If this does not work, go to https://raw.githubusercontent.com/Yemasthui/basicBot/master/basicBot.js and copy paste its content into your console (accessible in chrome by pressing f12) when on plug.dj in your room.
+
 ###Special settings###
 
 For a more detailed explanation: see settingsGuide.md

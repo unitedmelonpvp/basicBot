@@ -84,7 +84,7 @@ var retrieveFromStorage = function(){
 };
 
 var esBot = {
-        version: "1.1.2",        
+        version: "1.1.3",        
         status: false,
         name: "basicBot",
         creator: "EuclideanSpace",
@@ -1552,7 +1552,7 @@ var esBot = {
                                 if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                 if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                 else{
-                                    if(esBot.room.roulette.rouletteStatus){
+                                    if(esBot.room.roulette.rouletteStatus && esBot.room.roulette.participants.indexOf(chat.fromID) < 0){
                                         esBot.room.roulette.participants.push(chat.fromID);
                                         API.sendChat("/me @" + chat.from + " joined the roulette! (!leave if you regret it.)");
                                     }
