@@ -26,6 +26,7 @@ var kill = function(){
 }
 
 var storeToStorage = function(){
+    if(navigator.userAgent.toLowerCase().indexOf("chrome")<0) return;
     localStorage.setItem("esBotRoomSettings", JSON.stringify(esBot.roomSettings));
     localStorage.setItem("esBotRoom", JSON.stringify(esBot.room));
     var esBotStorageInfo = {
@@ -38,6 +39,7 @@ var storeToStorage = function(){
 };
 
 var retrieveFromStorage = function(){
+    if(navigator.userAgent.toLowerCase().indexOf("chrome")<0) return;
     var info = localStorage.getItem("esBotStorageInfo");
     if(info === null) API.chatLog("No previous data found.");
     else{
@@ -84,7 +86,7 @@ var retrieveFromStorage = function(){
 };
 
 var esBot = {
-        version: "1.1.3",        
+        version: "1.1.4",        
         status: false,
         name: "basicBot",
         creator: "EuclideanSpace",
@@ -979,6 +981,10 @@ var esBot = {
             var u = API.getUser();
             if(u.permission < 2) return API.chatLog("Only bouncers and up can run a bot.");
             if(u.permission === 2) return API.chatLog("The bot can't move people when it's run as a bouncer.");
+            if(navigator.userAgent.toLowerCase().indexOf("chrome")<0){
+                API.chatLog("Storing data across sessions isn't supported when not running the bot on Google Chrome.");
+                console.log("Storing data across sessions isn't supported when not running the bot on Google Chrome.");
+            }
             this.connectAPI();
             retrieveFromStorage();
             if(esBot.room.roomstats.launchTime === null){
