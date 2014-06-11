@@ -86,7 +86,7 @@ var retrieveFromStorage = function(){
 };
 
 var esBot = {
-        version: "1.1.4",        
+        version: "1.1.5",        
         status: false,
         name: "basicBot",
         creator: "EuclideanSpace",
@@ -831,6 +831,7 @@ var esBot = {
                     case '!sessionstats':       esBot.commands.sessionstatsCommand.functionality(chat, '!sessionstats');            executed = true; break;
                     case '!skip':               esBot.commands.skipCommand.functionality(chat, '!skip');                            executed = true; break;
                     case '!status':             esBot.commands.statusCommand.functionality(chat, '!status');                        executed = true; break;
+                    case '!swap':               esBot.commands.swapCommand.functionality(chat, '!swap');                            executed = true; break;
                     case '!theme':              esBot.commands.themeCommand.functionality(chat, '!theme');                          executed = true; break;
                     case '!timeguard':          esBot.commands.timeguardCommand.functionality(chat, '!timeguard');                  executed = true; break;
                     case '!togglemotd':         esBot.commands.togglemotdCommand.functionality(chat, '!togglemotd');                executed = true; break;
@@ -2206,6 +2207,44 @@ var esBot = {
                                       
                                      return API.sendChat(msg);
                                 };                              
+                        },
+                },
+
+                swapCommand: {
+                        rank: 'mod',
+                        type: 'startsWith',
+                        functionality: function(chat, cmd){
+                                if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                                if( !esBot.commands.executable(this.rank, chat) ) return void (0);
+                                else{
+                                    var msg = chat.message;
+                                    if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] No user specified.');
+                                    var firstSpace = msg.indexOf(' ');
+                                    //var secondSpace = msg.substring(firstSpace + 1).indexOf(' ');
+                                    var lastSpace = msg.lastIndexOf(' ');
+                                    var name1 = msg.substring(cmd.length + 2,lastSpace);
+                                    var name2 = msg.substring(lastSpace + 2);
+                                    var user1 = esBot.userUtilities.lookupUserName(name1);
+                                    var user2 = esBot.userUtilities.lookupUserName(name2);
+                                    if(typeof user1 === 'boolean' || typeof user2 === 'boolean') return API.sendChat('/me [@' + chat.from + '] Invalid user specified. (No names with spaces!)');
+                                    if(user1.id === esBot.loggedInID || user2.id === esBot.loggedInID) return API.sendChat('/me [@' + chat.from + '] Don\'t try to add me to the waitlist, please.');
+                                    var p1 = API.getWaitListPosition(user1.id);
+                                    var p2 = API.getWaitListPosition(user2.id);
+                                    if(p1 < 0 || p2 < 0) return API.sendChat('/me [@' + chat.from + '] Please only swap users that are in the waitlist!');
+                                    API.sendChat("/me Swapping " + name1 + " with " + name2 + ".");
+                                    if(p1 < p2){
+                                        esBot.userUtilities.moveUser(user2.id, p1, false);
+                                        setTimeout(function(user1, p2){
+                                            esBot.userUtilities.moveUser(user1.id, p2, false);
+                                        },2000, user1, p2);
+                                    }
+                                    else{
+                                        esBot.userUtilities.moveUser(user1.id, p2, false);
+                                        setTimeout(function(user2, p1){
+                                            esBot.userUtilities.moveUser(user2.id, p1, false);
+                                        },2000, user2, p1);
+                                    }
+                                };                           
                         },
                 },
 
