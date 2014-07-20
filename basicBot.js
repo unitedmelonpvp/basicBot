@@ -88,7 +88,7 @@ var retrieveFromStorage = function(){
 var esBot = {
         version: "1.1.5",        
         status: false,
-        name: "ChaosBot",
+        name: "EliteKitsBot",
         creator: "EuclideanSpace",
         loggedInID: null,
         scriptLink: "https://raw.githubusercontent.com/Yemasthui/basicBot/master/basicBot.js",
